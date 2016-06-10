@@ -1,0 +1,57 @@
+/*style sheet for homework UT BootCamp week 7*/
+/*RPS app using Firebase Assignment 7 - Louise K Miller*/
+*,
+ *:before,
+ *:after {
+ 	-webkit-box-sizing: border-box;
+ 	-moz-box-sizing: border-box;
+ 	box-sizing: border-box;
+ }
+
+
+body {
+	color: #fff;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.mainBlock {
+	padding: 15px 15px;
+}
+
+
+/*===================================================
+Sticky Footer
+===================================================
+*/
+* {
+	margin: 0;
+}
+
+html, body {
+	height: 100%;
+	background-color: #314993;
+}
+
+.page-wrap {
+	min-height: 100%;
+	/* equal to footer height */
+	margin-bottom: -20px;
+}
+
+.page-wrap:after {
+	content: "";
+	display: block;
+}
+
+.site-footer, .page-wrap:after {
+	height: 20px;
+	color: #fff;
+}
+
+
+.site-footer {
+
+	line-height: 15px;
+	font-size: 13px;
+	text-align: center;
+}
