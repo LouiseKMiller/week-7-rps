@@ -48,9 +48,14 @@
 				<h3 data-choice="paper">Paper</h3>
 				<h3 data-choice="scissors">Scissors</h3>
 			</div>
+			<div id="p1Choice"></div>
+			<div class="score">
+				<h3>Wins:&nbsp;<span id="p1Wins">0</span>&nbsp;Losses:&nbsp;<span id="p1Losses">0</span></h3>
+			</div>
 		</section>
 		<section class = "gameBlock" id="resultDiv">
 			<h2>RESULT</h2>
+			<h3 id="resultHere"></h3>
 		</section>
 		<div class = "gameBlock" id="playerTwoDiv">
 			<h2>WAITING FOR PLAYER TWO</h2>
@@ -59,14 +64,24 @@
 				<h3 data-choice="paper">Paper</h3>
 				<h3 data-choice="scissors">Scissors</h3>
 			</div>
+		<div id="p2Choice"></div>
+		<div class="score">
+			<h3>Wins:&nbsp;<span id="p2Wins">0</span>&nbsp;Losses:&nbsp;<span id="p2Losses">0</span></h3>
+		</div>
 
 		</div>
 	</div> <!-- end of blocksDiv -->
 </div>
 
 <!--  SOCIAL AREA -->
-<div>
-	
+<div id="chatForm">
+	<form id="chat">
+		<label for="userChat">CHAT HERE:
+			<input type="text" name="userChat" id="userChat">
+		</label>
+	</form>
+	<div id="chatBox"></div>
+
 </div>
 
 

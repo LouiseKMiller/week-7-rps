@@ -53,6 +53,23 @@ h3 {
 	line-height: 35px;
 }
 
+#chatForm {
+	text-align: center;
+}
+
+#userChat {
+	width: 500px;
+	margin-bottom: 8px;
+}
+
+#chatBox {
+	height: 100px;
+	width: 500px;
+	background-color: white;
+	color: black;
+	overflow: scroll;
+}
+
 /*===================================================
 Sticky Footer
 ===================================================

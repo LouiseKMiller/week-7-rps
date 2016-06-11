@@ -3,6 +3,16 @@
 
 $(document).ready(function(){
 
+window.onbeforeunload = function() {
+	if (you==1) 
+		player1Ref.remove();
+	else 	 	
+		player2Ref.remove();
+	fbTurn.remove();
+	player1Choice.remove();
+	player2Choice.remove();
+	messages.remove();
+};
 
 // Link to Firebase
 var rpsData = new Firebase("https://lkmrpsgame.firebaseio.com/");
@@ -13,12 +23,18 @@ var player2Name = new Firebase("https://lkmrpsgame.firebaseio.com/players/2/name
 var player1Choice = new Firebase("https://lkmrpsgame.firebaseio.com/players/1/choice");
 var player2Choice = new Firebase("https://lkmrpsgame.firebaseio.com/players/2/choice");
 var fbTurn = new Firebase("https://lkmrpsgame.firebaseio.com/turn");
-
+var player1Wins = player1Ref.child('/wins');
+var player1Losses = player1Ref.child('/losses');
+var player2Wins = player2Ref.child('/wins');
+var player2Losses = player2Ref.child('/losses');
+var messages = rpsData.child('/messages');
 
 var p1Choice = "";
 var p2Choice = "";
-var yourWins = "";
-var yourLosses = "";
+var p1Wins = 0;
+var p1Losses = 0;
+var p2Wins = 0;
+var p2Losses = 0;
 var you = 3;
 var playerOneExists = false;
 var playerTwoExists = false;
@@ -34,7 +50,7 @@ player1Name.on("value", function(snapshot) {
 		$("#playerOneDiv").find('h2').html(snapshot.val());
 		playerOneExists = true;
 		if ((playerTwoExists) && you==3) {
-			$('form').hide();
+			$('#start').hide();
 			$("#greetingDiv").html("<h2> Game Full. Please wait! </h2>");
 		}
 	}
@@ -119,6 +135,18 @@ $("#start").on("submit", function() {
 	if (playerOneExists && playerTwoExists) fbTurn.set(1);
 });  //end of submit form event handler
 
+
+function reset() {
+	$('#resultHere').empty();
+	$('#p1Choice').empty();
+	$('#p2Choice').empty();
+	fbTurn.set(1);
+	player1Choice.remove();
+	player2Choice.remove();
+}
+
+
+
 fbTurn.on("value", function(snapshot) {
 //  Turn One Actions
 	if (snapshot.val()==1) {
@@ -147,6 +175,10 @@ fbTurn.on("value", function(snapshot) {
 //	Turn Three Actions
 
 	if (snapshot.val()==3) {
+		$('#p1Choice').html(p1Choice);
+		$('#p2Choice').html(p2Choice);
+		$('#statusDiv').html("");
+
 		switch (p1Choice) {
 			case "rock":
 				if (p2Choice == "rock") winner = "tie";
@@ -166,18 +198,34 @@ fbTurn.on("value", function(snapshot) {
 
 		switch (winner) {
 			case "tie":
-				$('#resultDiv').html("<h2>It's a tie!</h2>");
+				$('#resultHere').html("It's a tie!");
 				break;
 			case "p1":
-				$('#resultDiv').html("<h2>Player One Wins!</h2>");
+				$('#resultHere').html("Player One Wins!");
+				if (you==1) {
+					p1Wins++;
+					p2Losses++;
+					player1Wins.set(p1Wins);
+					player1Losses.set(p2Losses);
+				};
 				break;
 			case "p2":	
-				$('#resultDiv').html("<h2>Player Two Wins!</h2>");
+				$('#resultHere').html("Player Two Wins!");
+				if (you==2) {
+					p2Wins++;
+					p1Losses++;
+					player2Wins.set(p2Wins);
+					player1Losses.set(p1Losses);
+				};
+
 				break;
 		};
+	
 
-		
+//  Timer for show results phase
+	setTimeout(function(){reset(); }, 8000)
 	};	
+
 }, function (errorObject) {
   	console.log("The read failed: " + errorObject.code);
 });
@@ -189,7 +237,7 @@ $('#p1choices').on('click','h3', function(){
 	p1Choice = $(this).data("choice");
 	player1Ref.update({'choice': p1Choice});
 	$('#p1choices').hide();
-	$('#playerOneDiv').append('<h2>' + p1Choice + '</h2>');
+	$('#p1Choice').append('<h2>' + p1Choice + '</h2>');
 	fbTurn.set(2);
 });
 
@@ -200,7 +248,7 @@ $('#p2choices').on('click','h3', function(){
 	p2Choice = $(this).data("choice");
 	player2Ref.update({'choice': p2Choice});
 	$('#p2choices').hide();
-	$('#playerTwoDiv').append('<h2>' + p2Choice + '</h2>');
+	$('#p2Choice').append('<h2>' + p2Choice + '</h2>');
 	fbTurn.set(3);
 });
 
@@ -227,6 +275,53 @@ player2Choice.on("value", function(snapshot) {
 	if (snapshot.exists() && (you==1)) {
 		p2Choice = snapshot.val();
 	};
+}, function (errorObject) {
+  	console.log("The read failed: " + errorObject.code);
+});
+
+player1Wins.on("value", function(snapshot) {
+	if (snapshot.exists()) {
+		p1Wins = snapshot.val();
+		$('#p1Wins').html(p1Wins);
+	}
+}, function (errorObject) {
+  	console.log("The read failed: " + errorObject.code);
+});
+player1Losses.on("value", function(snapshot) {
+	if (snapshot.exists()) {
+		p1Losses = snapshot.val();
+		$('#p1Losses').html(p1Losses);
+	};
+}, function (errorObject) {
+  	console.log("The read failed: " + errorObject.code);
+});
+player2Wins.on("value", function(snapshot) {
+	if (snapshot.exists()) {
+		p2Wins = snapshot.val();
+		$('#p2Wins').html(p2Wins);
+	};
+}, function (errorObject) {
+  	console.log("The read failed: " + errorObject.code);
+});
+player2Losses.on("value", function(snapshot) {
+	if (snapshot.exists()) {
+		p2Losses = snapshot.val();
+		$('#p2Losses').html(p2Losses);
+	};
+}, function (errorObject) {
+  	console.log("The read failed: " + errorObject.code);
+});
+
+$("#chat").on("submit", function() {
+	event.preventDefault();
+	var message = $('#userChat').val();
+	messages.push(message);
+	$('#userChat').val("");
+	});
+
+messages.on("child_added", function(snapshot) {
+	console.log (snapshot.val());
+	$('#chatBox').prepend(snapshot.val() + '<br>');
 }, function (errorObject) {
   	console.log("The read failed: " + errorObject.code);
 });
