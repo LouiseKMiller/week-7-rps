@@ -18,6 +18,40 @@ body {
 	padding: 15px 15px;
 }
 
+h1 {
+	line-height: 50px;
+	font-size: 25px;
+	border: 2px solid;
+	text-align: center;
+}
+
+form {
+	margin: 20px auto;
+	text-align: center;
+}
+
+.alignCenter{
+	text-align: center;
+}
+
+.gameBlock {
+	display: inline-block;
+	width: 350px;
+	height: 200px;
+	border: 2px solid;
+	margin: 10px 20px;
+	vertical-align: top;
+}
+
+h2 {
+	font-size: 20px;
+	line-height: 35px;
+}
+
+h3 {
+	font-size: 20px;
+	line-height: 35px;
+}
 
 /*===================================================
 Sticky Footer

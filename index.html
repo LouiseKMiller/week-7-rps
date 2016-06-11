@@ -6,6 +6,14 @@
 	<!-- css -->
 	<link rel="stylesheet" href="assets/css/reset.css">
 	<link rel="stylesheet" href="assets/css/style.css">
+
+	<!-- jQuery Reference -->
+
+	<script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
+
+	<!-- Firebase Reference -->
+	<script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
+	
 </head>
 
 
@@ -14,6 +22,53 @@
 
 <body>
 	<div class="mainBlock page-wrap">
+	<h1>ROCK PAPER SCISSORS</h1>
+
+<!--  FORM FOR USER NAME AND START BUTTON -->
+
+	<form id="start">
+		<label for="userInput">ENTER YOUR NAME:
+			<input type="text" name="userName" id="userInput">
+		</label>
+		<input type="submit" value="START" id="startButton">
+	</form>
+
+<!--  GAME AREA -->
+
+<div>
+	<div id="greetingDiv" class = "alignCenter"></div>
+	<div id="statusDiv" class = "alignCenter"></div>
+
+	<!-- following shown as inline blocks -->
+	<div id="blocksDiv">
+		<section class = "gameBlock" id="playerOneDiv">
+			<h2>WAITING FOR PLAYER ONE</h2>
+			<div id="p1choices">
+				<h3 data-choice="rock">Rock</h3>
+				<h3 data-choice="paper">Paper</h3>
+				<h3 data-choice="scissors">Scissors</h3>
+			</div>
+		</section>
+		<section class = "gameBlock" id="resultDiv">
+			<h2>RESULT</h2>
+		</section>
+		<div class = "gameBlock" id="playerTwoDiv">
+			<h2>WAITING FOR PLAYER TWO</h2>
+			<div id="p2choices">
+				<h3 data-choice="rock">Rock</h3>
+				<h3 data-choice="paper">Paper</h3>
+				<h3 data-choice="scissors">Scissors</h3>
+			</div>
+
+		</div>
+	</div> <!-- end of blocksDiv -->
+</div>
+
+<!--  SOCIAL AREA -->
+<div>
+	
+</div>
+
 
 	</div> <!-- end of Main division -->
 
@@ -22,7 +77,6 @@
 		<small>&copy; Copyright 2016 Louise K. Miller</small>
 	</footer>
 
-	<script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
 
 	<script type="text/javascript" src="assets/javascript/app.js"></script>
 </body>
